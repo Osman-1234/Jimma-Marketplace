@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}{% trans "Checkout" %}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <h1 class="fw-bold mb-4">{% trans "Checkout" %}</h1>
+  
+  <form action="{% url 'checkout' %}" method="post">
+    {% csrf_token %}
+    <div class="row g-5">
+      <div class="col-md-7 col-lg-8">
+        <h4 class="mb-3">{% trans "Shipping Address" %}</h4>
+        <div class="row g-3">
+          <div class="col-12">
+            <label for="full_name" class="form-label">{% trans "Full Name" %}</label>
+            <input type="text" class="form-control" id="full_name" name="full_name" required>
+          </div>
+
+          <div class="col-12">
+            <label for="email" class="form-label">{% trans "Email" %} <span class="text-muted">({% trans "Optional" %})</span></label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com">
+          </div>
+
+          <div class="col-12">
+            <label for="phone" class="form-label">{% trans "Phone Number" %}</label>
+            <input type="text" class="form-control" id="phone" name="phone" placeholder="+251..." required>
+          </div>
+
+          <div class="col-12">
+            <label for="address" class="form-label">{% trans "Address" %}</label>
+            <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+          </div>
+        </div>
+
+        <hr class="my-4">
+
+        <h4 class="mb-3">{% trans "Payment Method" %}</h4>
+
+        <div class="my-3">
+          <div class="form-check">
+            <input id="cod" name="payment_method" type="radio" class="form-check-input" value="COD" checked required>
+            <label class="form-check-label" for="cod">{% trans "Cash on Delivery" %}</label>
+          </div>
+          <div class="form-check">
+            <input id="telebirr" name="payment_method" type="radio" class="form-check-input" value="Telebirr" required>
+            <label class="form-check-label" for="telebirr">Telebirr</label>
+          </div>
+          <div class="form-check">
+            <input id="cbe" name="payment_method" type="radio" class="form-check-input" value="CBE" required>
+            <label class="form-check-label" for="cbe">CBE Birr</label>
+          </div>
+        </div>
+
+        <button class="w-100 btn btn-primary btn-lg" type="submit">{% trans "Place Order" %}</button>
+      </div>
+
+      <div class="col-md-5 col-lg-4 order-md-last">
+        <h4 class="d-flex justify-content-between align-items-center mb-3">
+          <span class="text-primary">{% trans "Your cart" %}</span>
+        </h4>
+        <ul class="list-group mb-3">
+          <li class="list-group-item d-flex justify-content-between">
+            <span>{% trans "Total (ETB)" %}</span>
+            <strong>{{ total }} ETB</strong>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}

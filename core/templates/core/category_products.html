@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}{{ category.name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="mb-4">
+    <h1 class="fw-bold">{{ category.name }}</h1>
+    {% if category.description %}
+      <p class="lead text-muted">{{ category.description }}</p>
+    {% endif %}
+  </div>
+
+  <div class="row g-4">
+    {% for product in products %}
+    <div class="col-sm-6 col-md-4 col-lg-3">
+      <div class="card h-100 border-0 shadow-sm">
+        {% if product.image %}
+          <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+        {% else %}
+          <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+            <span class="text-white">{% trans "No Image" %}</span>
+          </div>
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title h6 mb-2">
+            <a href="{% url 'product_detail' product.slug %}" class="text-decoration-none text-dark">
+              {{ product.name }}
+            </a>
+          </h5>
+          <p class="fw-bold text-primary mb-3">{{ product.price }} ETB</p>
+          <a href="{% url 'cart_add' product.id %}" class="btn btn-outline-primary btn-sm w-100">
+            {% trans "Add to Cart" %}
+          </a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+      <p class="text-muted">{% trans "No products available in this category yet." %}</p>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

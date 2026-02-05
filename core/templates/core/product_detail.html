@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load i18n static %}
+
+{% block title %}{{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+  <nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'category_products' product.category.slug %}">{{ product.category.name }}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+    </ol>
+  </nav>
+
+  <div class="row g-5">
+    <div class="col-md-6">
+      {% if product.image %}
+        <img src="{{ product.image.url }}" class="img-fluid rounded shadow-sm" alt="{{ product.name }}">
+      {% else %}
+        <div class="bg-light d-flex align-items-center justify-content-center rounded" style="min-height: 400px;">
+          <span class="text-muted">{% trans "No Image Available" %}</span>
+        </div>
+      {% endif %}
+    </div>
+    <div class="col-md-6">
+      <h1 class="fw-bold mb-3">{{ product.name }}</h1>
+      <p class="text-muted mb-4">{{ product.category.name }}</p>
+      <h2 class="text-primary fw-bold mb-4">{{ product.price }} ETB</h2>
+      
+      <div class="mb-4">
+        <h5 class="fw-bold">{% trans "Description" %}</h5>
+        <p class="text-secondary">{{ product.description }}</p>
+      </div>
+
+      <div class="mb-4 p-3 bg-light rounded">
+        <h6 class="fw-bold mb-1">{% trans "Sold by" %}: {{ product.vendor.business_name }}</h6>
+        <p class="small text-muted mb-0">{% trans "Located in" %}: {{ product.vendor.address }}</p>
+      </div>
+
+      <div class="d-grid gap-2">
+        <a href="{% url 'cart_add' product.id %}" class="btn btn-primary btn-lg">
+          {% trans "Add to Cart" %}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
