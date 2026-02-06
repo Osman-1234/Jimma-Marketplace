@@ -7,34 +7,44 @@
 <div class="container py-5">
   <div class="row justify-content-center">
     <div class="col-md-8 col-lg-6">
-      <div class="card border-0 shadow-sm p-4 p-md-5">
+      <div class="card border-0 shadow-sm p-4 p-md-5 rounded-4">
         <h1 class="fw-bold text-center mb-4">{% trans "Register as a Vendor" %}</h1>
         <p class="text-center text-muted mb-5">{% trans "Join our community and start selling your products to thousands of customers." %}</p>
 
         <form action="{% url 'vendor_register' %}" method="post">
           {% csrf_token %}
           <div class="mb-3">
-            <label for="business_name" class="form-label">{% trans "Business Name" %}</label>
-            <input type="text" class="form-control" id="business_name" name="business_name" required>
+            <label for="business_name" class="form-label fw-bold small">{% trans "Business Name" %}</label>
+            <input type="text" class="form-control bg-light border-0 py-2" id="business_name" name="business_name" placeholder="{% trans 'e.g. Jimma Tech Hub' %}" required>
           </div>
           
           <div class="mb-3">
-            <label for="phone" class="form-label">{% trans "Business Phone" %}</label>
-            <input type="text" class="form-control" id="phone" name="phone" required>
+            <label for="phone" class="form-label fw-bold small">{% trans "Business Phone" %}</label>
+            <input type="text" class="form-control bg-light border-0 py-2" id="phone" name="phone" placeholder="{% trans 'e.g. 0911223344' %}" required>
           </div>
 
           <div class="mb-3">
-            <label for="address" class="form-label">{% trans "Business Address" %}</label>
-            <input type="text" class="form-control" id="address" name="address" required>
+            <label for="kebele" class="form-label fw-bold small">{% trans "Neighborhood (Kebele)" %}</label>
+            <select class="form-select bg-light border-0 py-2" id="kebele" name="kebele" required>
+                <option value="">{% trans "Select your Kebele" %}</option>
+                {% for code, name in kebeles %}
+                    <option value="{{ code }}">{{ name }}</option>
+                {% endfor %}
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="address" class="form-label fw-bold small">{% trans "Specific Address" %}</label>
+            <input type="text" class="form-control bg-light border-0 py-2" id="address" name="address" placeholder="{% trans 'e.g. Near Hotel Central' %}" required>
           </div>
 
           <div class="mb-4">
-            <label for="description" class="form-label">{% trans "Business Description" %}</label>
-            <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+            <label for="description" class="form-label fw-bold small">{% trans "Business Description" %}</label>
+            <textarea class="form-control bg-light border-0" id="description" name="description" rows="4" placeholder="{% trans 'Tell us about your products and services...' %}"></textarea>
           </div>
 
           <div class="d-grid">
-            <button type="submit" class="btn btn-primary btn-lg">{% trans "Submit Application" %}</button>
+            <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold">{% trans "Submit Application" %}</button>
           </div>
         </form>
       </div>

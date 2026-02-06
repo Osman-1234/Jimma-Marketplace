@@ -1,17 +1,61 @@
 {% extends "base.html" %}
 {% load i18n static %}
 
-{% block title %}{% trans "Ethio-Marketplace | Home" %}{% endblock %}
-
 {% block content %}
 <!-- Hero Section -->
-<section class="hero-section text-center">
+<section class="position-relative overflow-hidden py-5 mb-5" style="background: linear-gradient(135deg, #FFF5F0 0%, #FFF 100%); min-height: 500px; display: flex; align-items: center;">
   <div class="container">
-    <h1 class="display-4 fw-bold mb-3">{% trans "Welcome to Ethio-Marketplace" %}</h1>
-    <p class="lead mb-4">{% trans "Discover amazing products from local vendors across Ethiopia." %}</p>
-    <div class="d-flex justify-content-center">
-      <a href="{% url 'product_list' %}" class="btn btn-primary btn-lg px-4 me-md-2">{% trans "Shop Now" %}</a>
-      <a href="{% url 'vendor_register' %}" class="btn btn-outline-secondary btn-lg px-4">{% trans "Become a Seller" %}</a>
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6">
+        <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-2 mb-3 fw-bold">{% trans "Jimma's #1 Marketplace" %}</span>
+        <h1 class="display-3 fw-bold mb-4" style="line-height: 1.1;">
+          {% trans "Shop Local," %} <br>
+          <span class="text-primary">{% trans "Live Better." %}</span>
+        </h1>
+        <p class="lead text-secondary mb-5 pe-lg-5">
+          {% trans "Discover fresh produce, electronics, and daily essentials from trusted Jimma vendors. Find sellers in your neighborhood!" %}
+        </p>
+        
+        <!-- Search by Product and Kebele Filter -->
+        <div class="card border-0 shadow-lg p-3 rounded-4 mb-5 bg-white" style="max-width: 600px; width: 100%;">
+            <form action="{% url 'product_list' %}" method="GET" class="row g-2 align-items-center">
+                <div class="col-md-5">
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-0"><i class="bi bi-search text-primary"></i></span>
+                        <input type="text" name="q" class="form-control border-0 bg-transparent shadow-none" placeholder="{% trans "What are you looking for?" %}">
+                    </div>
+                </div>
+                <div class="col-md-4 border-start d-none d-md-block">
+                    <div class="input-group">
+                        <span class="input-group-text bg-transparent border-0"><i class="bi bi-geo-alt text-primary"></i></span>
+                        <select name="kebele" class="form-select border-0 bg-transparent shadow-none" aria-label="Select Kebele">
+                            <option value="">{% trans "All Areas" %}</option>
+                            {% for kebele in kebeles %}
+                                <option value="{{ kebele }}" {% if kebele == selected_kebele %}selected{% endif %}>{{ kebele }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-primary rounded-pill w-100 py-2">{% trans "Search" %}</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="d-flex flex-wrap gap-3">
+          <a href="{% url 'product_list' %}" class="btn btn-outline-dark btn-lg rounded-pill px-4">{% trans "Explore All Shop" %} 🛍️</a>
+          <a href="{% url 'vendor_register' %}" class="btn btn-link text-primary text-decoration-none fw-bold px-4">{% trans "Become a Seller" %}</a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="position-relative">
+          <div class="bg-primary rounded-circle position-absolute top-50 start-50 translate-middle opacity-10" style="width: 500px; height: 500px;"></div>
+          <!-- Placeholder for Hero Image -->
+          <div class="card border-0 shadow-lg p-3 hover-lift rounded-4">
+             <img src="https://images.pexels.com/photos/1549702/pexels-photo-1549702.jpeg?auto=compress&cs=tinysrgb&w=800" class="img-fluid rounded-4" alt="Jimma Market">
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -19,80 +63,193 @@
 <!-- Categories Section -->
 <section class="py-5">
   <div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2 class="fw-bold">{% trans "Shop by Category" %}</h2>
-      <a href="#" class="text-decoration-none">{% trans "View All" %}</a>
+    <div class="d-flex justify-content-between align-items-end mb-5">
+      <div>
+        <h2 class="fw-bold mb-0">{% trans "Browse Categories" %}</h2>
+        <p class="text-secondary">{% trans "Find exactly what you need" %}</p>
+      </div>
+      <a href="{% url 'product_list' %}" class="btn btn-link text-primary fw-bold text-decoration-none">
+        {% trans "View All" %} <i class="bi bi-arrow-right"></i>
+      </a>
     </div>
     <div class="row g-4">
       {% for category in categories %}
       <div class="col-6 col-md-4 col-lg-2">
         <a href="{% url 'category_products' category.slug %}" class="text-decoration-none text-dark">
-          <div class="card h-100 text-center border-0 shadow-sm transition-hover">
-            <div class="card-body">
+          <div class="card h-100 text-center p-3 border-0 shadow-sm transition-hover">
+            <div class="mb-3 mx-auto d-flex align-items-center justify-content-center bg-light rounded-circle" style="width: 80px; height: 80px;">
               {% if category.image %}
-                <img src="{{ category.image.url }}" alt="{{ category.name }}" class="img-fluid mb-2" style="height: 60px; object-fit: contain;">
+                <img src="{{ category.image.url }}" alt="{{ category.name }}" class="img-fluid" style="width: 40px;">
               {% else %}
-                <div class="bg-light rounded-circle mx-auto mb-2 d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
-                  <i class="bi bi-tag fs-3 text-primary"></i>
-                </div>
+                <i class="bi bi-box-seam fs-2 text-primary"></i>
               {% endif %}
-              <h6 class="card-title mb-0">{{ category.name }}</h6>
             </div>
+            <h6 class="fw-bold mb-0">{{ category.name }}</h6>
+            <small class="text-secondary">{{ category.products.count }} {% trans "Items" %}</small>
           </div>
         </a>
       </div>
-      {% empty %}
-      <p class="text-center text-muted">{% trans "No categories found." %}</p>
       {% endfor %}
     </div>
   </div>
 </section>
 
-<!-- Featured Products Section -->
-<section class="py-5 bg-light">
+<!-- Featured Products -->
+<section class="py-5 bg-light rounded-5 mx-2 mx-md-5">
   <div class="container">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2 class="fw-bold">{% trans "Featured Products" %}</h2>
-      <a href="{% url 'product_list' %}" class="text-decoration-none">{% trans "View All" %}</a>
+    <div class="d-flex justify-content-between align-items-end mb-5">
+      <div>
+        <h2 class="fw-bold mb-0">{% trans "Featured Products" %}</h2>
+        <p class="text-secondary">{% trans "Handpicked for you by our team" %}</p>
+      </div>
+      <a href="{% url 'product_list' %}" class="btn btn-outline-primary rounded-pill px-4">{% trans "Shop All" %}</a>
     </div>
     <div class="row g-4">
       {% for product in featured_products %}
       <div class="col-sm-6 col-md-4 col-lg-3">
-        <div class="card h-100 border-0 shadow-sm">
+        <div class="card h-100 border-0 shadow-sm position-relative transition-hover">
           {% if product.image %}
-            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+            <img src="{{ product.image.url }}" class="card-img-top p-2 rounded-4" alt="{{ product.name }}" style="height: 250px; object-fit: cover;">
           {% else %}
-            <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
-              <span class="text-white">{% trans "No Image" %}</span>
+            <div class="card-img-top bg-secondary-subtle d-flex align-items-center justify-content-center m-2 rounded-4" style="height: 250px;">
+              <i class="bi bi-image fs-1 text-secondary"></i>
             </div>
           {% endif %}
-          <div class="card-body">
-            <p class="text-muted small mb-1">{{ product.category.name }}</p>
-            <h5 class="card-title h6 mb-2">
+          <div class="card-body pt-0">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                <span class="badge bg-light text-primary d-inline-block rounded-pill small fw-bold">{{ product.category.name }}</span>
+                {% if product.review_count > 0 %}
+                <div class="text-warning small">
+                    <i class="bi bi-star-fill"></i> {{ product.average_rating }}
+                </div>
+                {% endif %}
+            </div>
+            <h5 class="card-title h6 fw-bold mb-2">
               <a href="{% url 'product_detail' product.slug %}" class="text-decoration-none text-dark">
                 {{ product.name }}
               </a>
             </h5>
-            <p class="fw-bold text-primary mb-3">{{ product.price }} ETB</p>
-            <a href="{% url 'cart_add' product.id %}" class="btn btn-outline-primary btn-sm w-100">
-              {% trans "Add to Cart" %}
-            </a>
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <span class="fs-5 fw-bold text-primary">{{ product.price }} <small class="fs-6">ETB</small></span>
+              <a href="{% url 'cart_add' product.id %}" class="btn btn-dark btn-sm rounded-pill px-3">
+                <i class="bi bi-plus-lg"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Top Vendors Section -->
+<section class="py-5">
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-end mb-5">
+        <div>
+          <h2 class="fw-bold mb-0">{% trans "Top Jimma Vendors" %}</h2>
+          <p class="text-secondary">{% trans "The people bringing Jimma's best to your door" %}</p>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-outline-secondary btn-sm dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown">
+                {% if selected_kebele %}{{ selected_kebele }}{% else %}{% trans "Filter by Kebele" %}{% endif %}
+            </button>
+            <ul class="dropdown-menu shadow border-0">
+                <li><a class="dropdown-item" href="{% url 'home' %}">{% trans "All Areas" %}</a></li>
+                {% for kebele in kebeles %}
+                <li><a class="dropdown-item" href="{% url 'home' %}?kebele={{ kebele }}">{{ kebele }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="row g-4">
+      {% for vendor in local_vendors %}
+      <div class="col-md-6 col-lg-3">
+        <div class="card h-100 border-0 shadow-sm text-center p-4 transition-hover rounded-4">
+          <div class="bg-primary-subtle text-primary rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" style="width: 80px; height: 80px;">
+            <span class="fs-2 fw-bold">{{ vendor.business_name|slice:":1" }}</span>
+          </div>
+          <h5 class="fw-bold mb-1">{{ vendor.business_name }}</h5>
+          <div class="text-warning mb-2 small">
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill"></i>
+            <i class="bi bi-star-fill text-muted opacity-25"></i>
+          </div>
+          <p class="small text-secondary mb-3">{{ vendor.description|default:"Jimma's trusted local seller providing quality products."|truncatewords:10 }}</p>
+          <div class="mt-auto">
+            <span class="badge bg-primary-subtle text-primary rounded-pill px-3 py-2 border-0 mb-2 d-inline-block">
+                <i class="bi bi-geo-alt-fill me-1"></i>{{ vendor.kebele|default:vendor.address }}
+            </span>
+            <div class="text-muted small">
+                <i class="bi bi-patch-check-fill text-primary me-1"></i>{% trans "Verified Seller" %}
+            </div>
           </div>
         </div>
       </div>
       {% empty %}
       <div class="col-12 text-center py-5">
-        <p class="text-muted">{% trans "No featured products available." %}</p>
+          <i class="bi bi-shop fs-1 text-muted opacity-25"></i>
+          <p class="text-muted mt-3">{% trans "No vendors found in this neighborhood yet." %}</p>
+          <a href="{% url 'home' %}" class="btn btn-link">{% trans "Show all vendors" %}</a>
       </div>
       {% endfor %}
     </div>
   </div>
 </section>
 
+<!-- Market News & Blog Section -->
+{% if latest_articles %}
+<section class="py-5 bg-white">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-end mb-5">
+            <div>
+                <h2 class="fw-bold mb-0">{% trans "Market News & Stories" %}</h2>
+                <p class="text-secondary">{% trans "Stay updated with Jimma's local market" %}</p>
+            </div>
+            <a href="{% url 'article_list' %}" class="btn btn-link text-primary fw-bold text-decoration-none">
+                {% trans "Read All Stories" %} <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+        <div class="row g-4">
+            {% for article in latest_articles %}
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm transition-hover">
+                    {% if article.image %}
+                    <img src="{{ article.image.url }}" class="card-img-top" alt="{{ article.title }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="bg-primary-subtle text-primary d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="bi bi-journal-text display-4"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <small class="text-muted d-block mb-2">{{ article.created_at|date:"M d, Y" }}</small>
+                        <h5 class="card-title fw-bold">
+                            <a href="{% url 'article_detail' article.slug %}" class="text-dark text-decoration-none">
+                                {{ article.title }}
+                            </a>
+                        </h5>
+                        <p class="card-text text-muted small">
+                            {{ article.content|striptags|truncatewords:15 }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
 <style>
-  .transition-hover:hover {
-    transform: translateY(-5px);
-    transition: transform 0.3s ease;
-  }
+    .transition-hover {
+        transition: all 0.3s ease-in-out;
+    }
+    .transition-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important;
+    }
 </style>
 {% endblock %}

@@ -1,14 +1,75 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}{{ article.title }}{% endblock %}
+{% block title %}{{ article.title }} - Jimma Market Blog{% endblock %}
 
 {% block content %}
-<div class="container mt-5">
-    <h1>{{ article.title }}</h1>
-    <p class="text-muted">Published on {{ article.created_at|date:"F d, Y" }}</p>
-    <hr>
-    <div>
-        {{ article.content|safe }}
+<article class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Article Header -->
+                <header class="mb-5 text-center">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center mb-4">
+                            <li class="breadcrumb-item"><a href="{% url 'index' %}" class="text-decoration-none">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'article_list' %}" class="text-decoration-none">Blog</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ article.title|truncatechars:30 }}</li>
+                        </ol>
+                    </nav>
+                    <h1 class="display-4 fw-bold mb-4">{{ article.title }}</h1>
+                    <div class="d-flex align-items-center justify-content-center text-muted">
+                        <div class="me-3">
+                            <i class="bi bi-person-circle me-1"></i> 
+                            {{ article.author.get_full_name|default:article.author.username }}
+                        </div>
+                        <div class="me-3">
+                            <i class="bi bi-calendar3 me-1"></i> 
+                            {{ article.created_at|date:"F d, Y" }}
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Featured Image -->
+                {% if article.image %}
+                <div class="mb-5">
+                    <img src="{{ article.image.url }}" alt="{{ article.title }}" class="img-fluid rounded-4 shadow">
+                </div>
+                {% endif %}
+
+                <!-- Article Content -->
+                <div class="article-content lead mb-5">
+                    {{ article.content|safe|linebreaks }}
+                </div>
+
+                <!-- Footer / Share -->
+                <hr class="my-5">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+                    <div class="d-flex align-items-center">
+                        <span class="fw-bold me-3">Share this story:</span>
+                        <div class="btn-group">
+                            <a href="#" class="btn btn-outline-secondary btn-sm"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="btn btn-outline-secondary btn-sm"><i class="bi bi-twitter-x"></i></a>
+                            <a href="#" class="btn btn-outline-secondary btn-sm"><i class="bi bi-telegram"></i></a>
+                            <a href="#" class="btn btn-outline-secondary btn-sm"><i class="bi bi-whatsapp"></i></a>
+                        </div>
+                    </div>
+                    <a href="{% url 'article_list' %}" class="btn btn-light rounded-pill">
+                        <i class="bi bi-arrow-left me-2"></i> Back to Blog
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</article>
+
+<style>
+    .article-content {
+        line-height: 1.8;
+        color: #333;
+    }
+    .article-content p {
+        margin-bottom: 1.5rem;
+    }
+</style>
 {% endblock %}

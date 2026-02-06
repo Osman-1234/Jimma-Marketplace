@@ -10,6 +10,7 @@ urlpatterns = [
 
 urlpatterns += i18n_patterns(
     path('admin/', admin.site.py_urls if hasattr(admin.site, 'py_urls') else admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')), # Added auth urls
     path('', include('core.urls')),
 )
 

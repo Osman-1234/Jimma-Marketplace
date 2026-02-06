@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Login" %} | Jimma Market{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-light min-vh-100 d-flex align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    <div class="bg-primary p-4 text-white text-center">
+                        <i class="bi bi-shop-window fs-1 mb-2"></i>
+                        <h3 class="fw-bold mb-0">{% trans "Welcome Back!" %}</h3>
+                        <p class="small opacity-75 mb-0">{% trans "Login to your Jimma Market account" %}</p>
+                    </div>
+                    <div class="card-body p-4 p-md-5 bg-white">
+                        {% if form.errors %}
+                            <div class="alert alert-danger border-0 rounded-3 small">
+                                {% trans "Your username and password didn't match. Please try again." %}
+                            </div>
+                        {% endif %}
+
+                        <form method="post" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            <div class="mb-4">
+                                <label for="id_username" class="form-label small fw-bold">{% trans "Username" %}</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-0"><i class="bi bi-person"></i></span>
+                                    <input type="text" name="username" autofocus maxlength="150" required id="id_username" class="form-control bg-light border-0 shadow-none px-3 py-2" placeholder="{% trans "Enter your username" %}">
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <label for="id_password" class="form-label small fw-bold">{% trans "Password" %}</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-0"><i class="bi bi-lock"></i></span>
+                                    <input type="password" name="password" required id="id_password" class="form-control bg-light border-0 shadow-none px-3 py-2" placeholder="{% trans "Enter your password" %}">
+                                </div>
+                            </div>
+                            
+                            <input type="hidden" name="next" value="{{ next }}">
+                            
+                            <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill py-3 mb-4">
+                                {% trans "Login" %}
+                            </button>
+
+                            <div class="text-center small text-secondary">
+                                {% trans "Don't have an account?" %} 
+                                <a href="/accounts/signup/" class="text-primary fw-bold text-decoration-none">{% trans "Sign Up" %}</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <a href="{% url 'index' %}" class="text-secondary text-decoration-none small">
+                        <i class="bi bi-arrow-left me-1"></i> {% trans "Back to Home" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

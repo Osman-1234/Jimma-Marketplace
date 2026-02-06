@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-5">
+        <div class="col-lg-7">
+            <h1 class="display-4 fw-bold mb-4">{% trans "Delivery Information" %}</h1>
+            <p class="lead text-muted">
+                {% trans "We provide fast and reliable delivery service across all Kebeles in Jimma city. Our mission is to get your products to you within hours of ordering." %}
+            </p>
+        </div>
+    </div>
+
+    <!-- Delivery Map Placeholder -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="bg-light rounded-4 overflow-hidden position-relative" style="height: 400px;">
+                <div class="position-absolute top-50 start-50 translate-middle text-center">
+                    <i class="bi bi-geo-alt fs-1 text-primary mb-3"></i>
+                    <h3 class="fw-bold">{% trans "Jimma City Delivery Zones" %}</h3>
+                    <p class="text-muted">{% trans "We cover Central, North, South, and Outskirts zones." %}</p>
+                    <div class="mt-4">
+                        <span class="badge bg-success mx-1">Zone A (Central)</span>
+                        <span class="badge bg-primary mx-1">Zone B (Inner city)</span>
+                        <span class="badge bg-warning text-dark mx-1">Zone C (Outskirts)</span>
+                    </div>
+                </div>
+                <!-- Placeholder for an actual map -->
+                <div class="w-100 h-100 opacity-25" style="background-image: url('https://images.pexels.com/photos/1078850/pexels-photo-1078850.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'); background-size: cover; background-position: center;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-5">
+        <!-- Delivery Fees -->
+        <div class="col-md-6">
+            <h3 class="fw-bold mb-4">{% trans "Delivery Fees by Zone" %}</h3>
+            <div class="card border-0 shadow-sm overflow-hidden rounded-4">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center py-3 px-4">
+                        <div>
+                            <h6 class="mb-0 fw-bold">{% trans "Zone A" %}</h6>
+                            <small class="text-muted">{% trans "Bosa, Mendera, Ginjo, Hermata" %}</small>
+                        </div>
+                        <span class="fw-bold text-primary">50 ETB</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center py-3 px-4">
+                        <div>
+                            <h6 class="mb-0 fw-bold">{% trans "Zone B" %}</h6>
+                            <small class="text-muted">{% trans "Kito Furdisa, Awetu, Ifa Bula" %}</small>
+                        </div>
+                        <span class="fw-bold text-primary">75 ETB</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center py-3 px-4">
+                        <div>
+                            <h6 class="mb-0 fw-bold">{% trans "Zone C" %}</h6>
+                            <small class="text-muted">{% trans "Bore, Hulle, Jimma University Outskirts" %}</small>
+                        </div>
+                        <span class="fw-bold text-primary">100 ETB</span>
+                    </li>
+                </ul>
+            </div>
+            <p class="small text-muted mt-3">
+                * {% trans "Fees may vary slightly based on package weight and volume." %}
+            </p>
+        </div>
+
+        <!-- Delivery Slots -->
+        <div class="col-md-6">
+            <h3 class="fw-bold mb-4">{% trans "Available Delivery Slots" %}</h3>
+            <div class="row g-3">
+                <div class="col-6">
+                    <div class="p-3 border rounded-3 bg-white text-center">
+                        <div class="text-primary fw-bold">09:00 - 12:00</div>
+                        <div class="small text-muted">{% trans "Morning Slot" %}</div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="p-3 border rounded-3 bg-white text-center">
+                        <div class="text-primary fw-bold">12:00 - 15:00</div>
+                        <div class="small text-muted">{% trans "Afternoon Slot 1" %}</div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="p-3 border rounded-3 bg-white text-center">
+                        <div class="text-primary fw-bold">15:00 - 18:00</div>
+                        <div class="small text-muted">{% trans "Afternoon Slot 2" %}</div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="p-3 border rounded-3 bg-white text-center">
+                        <div class="text-primary fw-bold">18:00 - 20:00</div>
+                        <div class="small text-muted">{% trans "Evening Slot" %}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 p-4 bg-primary text-white rounded-4">
+                <h5 class="fw-bold mb-2">{% trans "Express Delivery" %}</h5>
+                <p class="mb-0 small">
+                    {% trans "Need it even faster? Choose 'Express' at checkout for delivery within 60 minutes for central Jimma locations (+30 ETB)." %}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Track Order Call to Action -->
+    <div class="mt-5 p-5 bg-dark text-white rounded-4 text-center">
+        <h2 class="fw-bold mb-3">{% trans "Track Your Order" %}</h2>
+        <p class="mb-4 text-white-50">{% trans "Check the real-time status of your package using your order number and phone number." %}</p>
+        <a href="{% url 'track_order' %}" class="btn btn-primary btn-lg px-5">{% trans "Track Now" %}</a>
+    </div>
+</div>
+{% endblock %}

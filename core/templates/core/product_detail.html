@@ -1,49 +1,280 @@
 {% extends "base.html" %}
 {% load i18n static %}
 
-{% block title %}{{ product.name }}{% endblock %}
+{% block title %}{{ product.name }} | Jimma Market{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-  <nav aria-label="breadcrumb" class="mb-4">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'index' %}">{% trans "Home" %}</a></li>
-      <li class="breadcrumb-item"><a href="{% url 'category_products' product.category.slug %}">{{ product.category.name }}</a></li>
-      <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
-    </ol>
-  </nav>
+<section class="py-5">
+  <div class="container">
+    <nav aria-label="breadcrumb" class="mb-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'index' %}" class="text-decoration-none">{% trans "Home" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'category_products' product.category.slug %}" class="text-decoration-none">{{ product.category.name }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+      </ol>
+    </nav>
 
-  <div class="row g-5">
-    <div class="col-md-6">
-      {% if product.image %}
-        <img src="{{ product.image.url }}" class="img-fluid rounded shadow-sm" alt="{{ product.name }}">
-      {% else %}
-        <div class="bg-light d-flex align-items-center justify-content-center rounded" style="min-height: 400px;">
-          <span class="text-muted">{% trans "No Image Available" %}</span>
+    <div class="row g-5">
+      <!-- Product Images -->
+      <div class="col-lg-6">
+        <div class="card border-0 shadow-sm p-2 rounded-4">
+          <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner rounded-3">
+              <div class="carousel-item active">
+                {% if product.image %}
+                  <img src="{{ product.image.url }}" class="d-block w-100" alt="{{ product.name }}" style="max-height: 500px; object-fit: contain;">
+                {% else %}
+                  <div class="bg-secondary-subtle d-flex align-items-center justify-content-center" style="height: 500px;">
+                    <i class="bi bi-image fs-1 text-secondary"></i>
+                  </div>
+                {% endif %}
+              </div>
+              {% for img in product.images.all %}
+              <div class="carousel-item">
+                <img src="{{ img.image.url }}" class="d-block w-100" alt="{{ img.alt_text|default:product.name }}" style="max-height: 500px; object-fit: contain;">
+              </div>
+              {% endfor %}
+            </div>
+            {% if product.images.count > 0 %}
+            <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+            {% endif %}
+          </div>
         </div>
-      {% endif %}
-    </div>
-    <div class="col-md-6">
-      <h1 class="fw-bold mb-3">{{ product.name }}</h1>
-      <p class="text-muted mb-4">{{ product.category.name }}</p>
-      <h2 class="text-primary fw-bold mb-4">{{ product.price }} ETB</h2>
-      
-      <div class="mb-4">
-        <h5 class="fw-bold">{% trans "Description" %}</h5>
-        <p class="text-secondary">{{ product.description }}</p>
+        
+        <!-- Thumbnails -->
+        <div class="d-flex gap-2 mt-3 overflow-auto">
+          {% if product.image %}
+          <div class="border rounded-3 p-1" style="width: 80px; cursor: pointer;" onclick="bootstrap.Carousel.getOrCreateInstance(document.getElementById('productCarousel')).to(0)">
+            <img src="{{ product.image.url }}" class="img-fluid rounded-2" alt="Main">
+          </div>
+          {% endif %}
+          {% for img in product.images.all %}
+          <div class="border rounded-3 p-1" style="width: 80px; cursor: pointer;" onclick="bootstrap.Carousel.getOrCreateInstance(document.getElementById('productCarousel')).to({{ forloop.counter }})">
+            <img src="{{ img.image.url }}" class="img-fluid rounded-2" alt="Thumb">
+          </div>
+          {% endfor %}
+        </div>
       </div>
 
-      <div class="mb-4 p-3 bg-light rounded">
-        <h6 class="fw-bold mb-1">{% trans "Sold by" %}: {{ product.vendor.business_name }}</h6>
-        <p class="small text-muted mb-0">{% trans "Located in" %}: {{ product.vendor.address }}</p>
-      </div>
+      <!-- Product Info -->
+      <div class="col-lg-6">
+        <div class="ps-lg-4">
+          <span class="badge bg-light text-primary mb-2 d-inline-block rounded-pill small fw-bold">{{ product.category.name }}</span>
+          <h1 class="fw-bold mb-3">{{ product.name }}</h1>
+          
+          <div class="d-flex align-items-center gap-3 mb-4">
+            <div class="text-warning">
+              {% with ''|center:5 as range %}
+              {% for _ in range %}
+                {% if forloop.counter <= product.average_rating %}
+                  <i class="bi bi-star-fill"></i>
+                {% elif forloop.counter|add:"-0.5" <= product.average_rating %}
+                  <i class="bi bi-star-half"></i>
+                {% else %}
+                  <i class="bi bi-star"></i>
+                {% endif %}
+              {% endfor %}
+              {% endwith %}
+            </div>
+            <span class="text-secondary small">({{ reviews.count }} {% trans "reviews" %})</span>
+            <span class="text-success small fw-bold"><i class="bi bi-check-circle-fill me-1"></i>{% trans "In Stock" %} ({{ product.stock }})</span>
+          </div>
 
-      <div class="d-grid gap-2">
-        <a href="{% url 'cart_add' product.id %}" class="btn btn-primary btn-lg">
-          {% trans "Add to Cart" %}
-        </a>
+          <div class="mb-4">
+            <span class="display-5 fw-bold text-primary">{{ product.price }}</span>
+            <span class="h4 text-secondary ms-1">ETB</span>
+          </div>
+
+          <div class="card bg-light border-0 p-4 rounded-4 mb-4">
+            <h6 class="fw-bold mb-3">{% trans "Description" %}</h6>
+            <div class="text-secondary">
+              {{ product.description|linebreaks }}
+            </div>
+          </div>
+
+          <!-- Add to Cart Form -->
+          <form action="{% url 'cart_add' product.id %}" method="post" class="mb-5">
+            {% csrf_token %}
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label small fw-bold">{% trans "Quantity" %}</label>
+                <input type="number" name="quantity" value="1" min="1" max="{{ product.stock }}" class="form-control rounded-pill border-0 shadow-sm px-4">
+              </div>
+              <div class="col-md-8 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary btn-lg w-100 rounded-pill">
+                  <i class="bi bi-cart-plus me-2"></i> {% trans "Add to Cart" %}
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <div class="d-flex flex-wrap gap-4 border-top pt-4">
+            <div class="d-flex align-items-center">
+              <div class="bg-primary-subtle p-2 rounded-circle me-3">
+                <i class="bi bi-shop text-primary"></i>
+              </div>
+              <div>
+                <small class="text-secondary d-block">{% trans "Sold by" %}</small>
+                <a href="#" class="fw-bold text-dark text-decoration-none">{{ product.vendor.business_name }}</a>
+              </div>
+            </div>
+            <div class="d-flex align-items-center">
+              <div class="bg-primary-subtle p-2 rounded-circle me-3">
+                <i class="bi bi-truck text-primary"></i>
+              </div>
+              <div>
+                <small class="text-secondary d-block">{% trans "Delivery" %}</small>
+                <span class="fw-bold text-dark">{% trans "Free in Jimma" %}</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>
+
+<!-- Reviews Section -->
+<section class="py-5 bg-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <h3 class="fw-bold mb-5">{% trans "Customer Reviews" %}</h3>
+        
+        {% for review in reviews %}
+        <div class="d-flex mb-5 pb-5 border-bottom">
+          <div class="flex-shrink-0 me-4">
+            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 50px; height: 50px;">
+              {{ review.full_name|slice:":1" }}
+            </div>
+          </div>
+          <div>
+            <div class="d-flex align-items-center gap-3 mb-2">
+              <h6 class="fw-bold mb-0">{{ review.full_name }}</h6>
+              <span class="text-secondary small">{{ review.created_at|date }}</span>
+            </div>
+            <div class="text-warning mb-3 small">
+              {% with ''|center:5 as range %}
+              {% for _ in range %}
+                <i class="bi bi-star{% if forloop.counter <= review.rating %}-fill{% endif %}"></i>
+              {% endfor %}
+              {% endwith %}
+            </div>
+            <p class="text-secondary">{{ review.comment }}</p>
+          </div>
+        </div>
+        {% empty %}
+        <div class="text-center py-5 bg-light rounded-4 mb-5">
+           <i class="bi bi-chat-dots display-4 text-secondary mb-3"></i>
+           <p class="text-secondary">{% trans "No reviews yet. Be the first to review!" %}</p>
+        </div>
+        {% endfor %}
+      </div>
+      
+      <div class="col-lg-4">
+        <div class="card border-0 shadow-sm p-4 sticky-top rounded-4" style="top: 100px;">
+          <h5 class="fw-bold mb-4">{% trans "Add a Review" %}</h5>
+          <p class="text-secondary small mb-4">{% trans "Share your experience with this product to help other shoppers in Jimma." %}</p>
+          
+          <form action="{% url 'product_review_submit' product.id %}" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label class="form-label small fw-bold">{% trans "Rating" %}</label>
+              <div class="rating-stars text-warning fs-4" style="cursor: pointer;">
+                <input type="hidden" name="rating" id="id_rating" value="5">
+                <i class="bi bi-star-fill star-input" data-value="1"></i>
+                <i class="bi bi-star-fill star-input" data-value="2"></i>
+                <i class="bi bi-star-fill star-input" data-value="3"></i>
+                <i class="bi bi-star-fill star-input" data-value="4"></i>
+                <i class="bi bi-star-fill star-input" data-value="5"></i>
+              </div>
+            </div>
+            {% if not user.is_authenticated %}
+            <div class="mb-3">
+              <label class="form-label small fw-bold">{% trans "Full Name" %}</label>
+              <input type="text" name="full_name" class="form-control rounded-3 border-light" placeholder="{% trans "Your name" %}" required>
+            </div>
+            {% endif %}
+            <div class="mb-4">
+              <label class="form-label small fw-bold">{% trans "Review" %}</label>
+              <textarea name="comment" class="form-control rounded-3 border-light" rows="4" placeholder="{% trans "What did you like or dislike?" %}" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 rounded-pill">{% trans "Submit Review" %}</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Related Products -->
+<section class="py-5">
+  <div class="container">
+    <h3 class="fw-bold mb-5">{% trans "You Might Also Like" %}</h3>
+    <div class="row g-4">
+      {% for rel in related_products %}
+      <div class="col-6 col-md-3">
+        <div class="card h-100 border-0 shadow-sm transition-hover">
+          {% if rel.image %}
+            <img src="{{ rel.image.url }}" class="card-img-top p-2 rounded-4" alt="{{ rel.name }}" style="height: 200px; object-fit: cover;">
+          {% else %}
+            <div class="card-img-top bg-secondary-subtle d-flex align-items-center justify-content-center m-2 rounded-4" style="height: 200px;">
+              <i class="bi bi-image fs-4 text-secondary"></i>
+            </div>
+          {% endif %}
+          <div class="card-body pt-0">
+            <h6 class="fw-bold mb-2">
+              <a href="{% url 'product_detail' rel.slug %}" class="text-decoration-none text-dark">{{ rel.name }}</a>
+            </h6>
+            <div class="text-warning small mb-2">
+                <i class="bi bi-star-fill"></i> {{ rel.average_rating }}
+            </div>
+            <span class="fw-bold text-primary">{{ rel.price }} ETB</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const stars = document.querySelectorAll('.star-input');
+    const ratingInput = document.getElementById('id_rating');
+
+    stars.forEach(star => {
+        star.addEventListener('click', function() {
+            const value = this.getAttribute('data-value');
+            ratingInput.value = value;
+            
+            stars.forEach(s => {
+                if (parseInt(s.getAttribute('data-value')) <= parseInt(value)) {
+                    s.classList.remove('bi-star');
+                    s.classList.add('bi-star-fill');
+                } else {
+                    s.classList.remove('bi-star-fill');
+                    s.classList.add('bi-star');
+                }
+            });
+        });
+    });
+});
+</script>
+
+<style>
+    .transition-hover {
+        transition: all 0.3s ease;
+    }
+    .transition-hover:hover {
+        transform: translateY(-5px);
+    }
+</style>
 {% endblock %}

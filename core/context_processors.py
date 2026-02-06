@@ -1,5 +1,6 @@
 import os
 import time
+from .models import Category
 
 def project_context(request):
     """
@@ -8,6 +9,6 @@ def project_context(request):
     return {
         "project_description": os.getenv("PROJECT_DESCRIPTION", ""),
         "project_image_url": os.getenv("PROJECT_IMAGE_URL", ""),
-        # Used for cache-busting static assets
         "deployment_timestamp": int(time.time()),
+        "categories_all": Category.objects.all(),
     }

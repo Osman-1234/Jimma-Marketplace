@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Product - {{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm rounded-4 text-center p-5">
+                <div class="mb-4">
+                    <div class="bg-danger-subtle text-danger rounded-circle p-4 d-inline-block">
+                        <i class="bi bi-exclamation-triangle display-4"></i>
+                    </div>
+                </div>
+                <h2 class="fw-bold mb-3">Delete Product?</h2>
+                <p class="text-muted mb-5">
+                    Are you sure you want to delete <strong>{{ product.name }}</strong>? This action cannot be undone and will remove the product from the marketplace.
+                </p>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="d-grid gap-3">
+                        <button type="submit" class="btn btn-danger rounded-pill py-3 fw-bold">
+                            Yes, Delete Permanently
+                        </button>
+                        <a href="{% url 'vendor_dashboard' %}" class="btn btn-light rounded-pill py-3 fw-bold">
+                            No, Keep Product
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

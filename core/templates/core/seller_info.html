@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<div class="bg-primary-subtle py-5 mb-5">
+    <div class="container py-lg-5">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-3 fw-bold mb-4">{% trans "Grow Your Business in Jimma" %}</h1>
+                <p class="lead mb-4">
+                    {% trans "Join Jimma Market and start selling your products to thousands of customers across the city today." %}
+                </p>
+                <div class="d-flex gap-3">
+                    <a href="{% url 'vendor_register' %}" class="btn btn-primary btn-lg px-5 py-3 rounded-pill fw-bold">{% trans "Register Now" %}</a>
+                    <a href="#benefits" class="btn btn-outline-primary btn-lg px-5 py-3 rounded-pill fw-bold">{% trans "Learn More" %}</a>
+                </div>
+            </div>
+            <div class="col-lg-6 d-none d-lg-block">
+                <img src="https://images.pexels.com/photos/5920775/pexels-photo-5920775.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Seller Success" class="img-fluid rounded-4 shadow-lg">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container pb-5" id="benefits">
+    <!-- Stats Section -->
+    <div class="row g-4 mb-5 text-center">
+        <div class="col-md-4">
+            <div class="p-4 border rounded-4 bg-white shadow-sm">
+                <div class="h2 fw-bold text-primary mb-1">500+</div>
+                <div class="text-muted text-uppercase small tracking-widest">{% trans "Active Sellers" %}</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-4 border rounded-4 bg-white shadow-sm">
+                <div class="h2 fw-bold text-primary mb-1">10,000+</div>
+                <div class="text-muted text-uppercase small tracking-widest">{% trans "Customers" %}</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-4 border rounded-4 bg-white shadow-sm">
+                <div class="h2 fw-bold text-primary mb-1">24/7</div>
+                <div class="text-muted text-uppercase small tracking-widest">{% trans "Support" %}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Benefits Section -->
+    <h2 class="text-center fw-bold mb-5">{% trans "Why Sell on Jimma Market?" %}</h2>
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-4">
+                <div class="bg-primary-subtle text-primary rounded-3 d-flex align-items-center justify-content-center mb-4" style="width: 60px; height: 60px;">
+                    <i class="bi bi-graph-up-arrow fs-3"></i>
+                </div>
+                <h4 class="fw-bold">{% trans "Increase Sales" %}</h4>
+                <p class="text-muted mb-0">{% trans "Reach customers outside your immediate neighborhood. Your shop will be open 24/7 to everyone in Jimma." %}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-4">
+                <div class="bg-success-subtle text-success rounded-3 d-flex align-items-center justify-content-center mb-4" style="width: 60px; height: 60px;">
+                    <i class="bi bi-truck fs-3"></i>
+                </div>
+                <h4 class="fw-bold">{% trans "Hassle-Free Logistics" %}</h4>
+                <p class="text-muted mb-0">{% trans "Focus on your products; we handle the delivery. Our riders pick up from your shop and deliver to the customer." %}</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm p-4">
+                <div class="bg-warning-subtle text-warning rounded-3 d-flex align-items-center justify-content-center mb-4" style="width: 60px; height: 60px;">
+                    <i class="bi bi-megaphone fs-3"></i>
+                </div>
+                <h4 class="fw-bold">{% trans "Free Marketing" %}</h4>
+                <p class="text-muted mb-0">{% trans "We promote your products on social media and our app, giving your brand the visibility it deserves in Jimma." %}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- How to become a seller -->
+    <div class="row align-items-center py-5">
+        <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
+            <h2 class="fw-bold mb-4">{% trans "Become a Seller in 3 Simple Steps" %}</h2>
+            <div class="space-y-4">
+                <div class="d-flex mb-4">
+                    <div class="flex-shrink-0 me-3">
+                        <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 32px; height: 32px;">1</div>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold mb-1">{% trans "Sign Up" %}</h5>
+                        <p class="text-muted">{% trans "Create a seller account with your business details and contact information." %}</p>
+                    </div>
+                </div>
+                <div class="d-flex mb-4">
+                    <div class="flex-shrink-0 me-3">
+                        <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 32px; height: 32px;">2</div>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold mb-1">{% trans "Upload Products" %}</h5>
+                        <p class="text-muted">{% trans "Add photos and descriptions of your products. Our team will verify and approve them quickly." %}</p>
+                    </div>
+                </div>
+                <div class="d-flex">
+                    <div class="flex-shrink-0 me-3">
+                        <div class="bg-dark text-white rounded-circle d-flex align-items-center justify-content-center fw-bold" style="width: 32px; height: 32px;">3</div>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold mb-1">{% trans "Start Earning" %}</h5>
+                        <p class="text-muted">{% trans "Receive orders, package the items, and hand them over to our rider. We transfer your earnings weekly." %}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-5">
+                <a href="{% url 'vendor_register' %}" class="btn btn-primary btn-lg px-4">{% trans "Start Selling Now" %}</a>
+            </div>
+        </div>
+        <div class="col-lg-6 order-lg-1">
+            <div class="bg-light p-4 rounded-4">
+                <h4 class="fw-bold mb-4">{% trans "Simple Commission Structure" %}</h4>
+                <table class="table table-borderless align-middle">
+                    <tbody>
+                        <tr class="border-bottom">
+                            <td class="py-3">
+                                <h6 class="mb-0 fw-bold">{% trans "Registration Fee" %}</h6>
+                                <p class="small text-muted mb-0">{% trans "Start for free" %}</p>
+                            </td>
+                            <td class="py-3 text-end text-success fw-bold">{% trans "0 ETB" %}</td>
+                        </tr>
+                        <tr class="border-bottom">
+                            <td class="py-3">
+                                <h6 class="mb-0 fw-bold">{% trans "Monthly Subscription" %}</h6>
+                                <p class="small text-muted mb-0">{% trans "No fixed costs" %}</p>
+                            </td>
+                            <td class="py-3 text-end text-success fw-bold">{% trans "0 ETB" %}</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3">
+                                <h6 class="mb-0 fw-bold">{% trans "Sales Commission" %}</h6>
+                                <p class="small text-muted mb-0">{% trans "Only pay when you sell" %}</p>
+                            </td>
+                            <td class="py-3 text-end text-primary fw-bold">{% trans "5% - 15%" %}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="small text-muted mt-3 mb-0">
+                    * {% trans "Commission varies by category. Contact us for bulk or special category rates." %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

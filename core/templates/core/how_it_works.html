@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">{% trans "How It Works" %}</h1>
+        <p class="lead text-muted">{% trans "Shopping at Jimma Market is simple, fast, and secure." %}</p>
+    </div>
+
+    <!-- Steps -->
+    <div class="row g-5 mb-5 align-items-center">
+        <div class="col-md-6">
+            <div class="d-flex mb-5">
+                <div class="flex-shrink-0 me-4">
+                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold fs-4" style="width: 60px; height: 60px;">1</div>
+                </div>
+                <div>
+                    <h3 class="fw-bold">{% trans "Browse & Select" %}</h3>
+                    <p class="text-muted">{% trans "Explore thousands of products from local Jimma vendors. Use our smart search or category filters to find exactly what you need. No account required to start shopping!" %}</p>
+                </div>
+            </div>
+            <div class="d-flex mb-5">
+                <div class="flex-shrink-0 me-4">
+                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold fs-4" style="width: 60px; height: 60px;">2</div>
+                </div>
+                <div>
+                    <h3 class="fw-bold">{% trans "Add to Cart" %}</h3>
+                    <p class="text-muted">{% trans "Found something you like? Click 'Add to Cart'. You can continue shopping for more items from different vendors and manage everything in one single cart." %}</p>
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="flex-shrink-0 me-4">
+                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold fs-4" style="width: 60px; height: 60px;">3</div>
+                </div>
+                <div>
+                    <h3 class="fw-bold">{% trans "Guest Checkout" %}</h3>
+                    <p class="text-muted">{% trans "Go to your cart and click 'Proceed to Checkout'. Simply provide your phone number, delivery address in Jimma, and choose a delivery time slot that works for you." %}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bg-light rounded-4 p-5">
+                <img src="https://images.pexels.com/photos/5632371/pexels-photo-5632371.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Shopping Step" class="img-fluid rounded-4 shadow">
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-5 mb-5 align-items-center flex-md-row-reverse">
+        <div class="col-md-6">
+            <div class="d-flex mb-5">
+                <div class="flex-shrink-0 me-4">
+                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold fs-4" style="width: 60px; height: 60px;">4</div>
+                </div>
+                <div>
+                    <h3 class="fw-bold">{% trans "Fast Delivery" %}</h3>
+                    <p class="text-muted">{% trans "Our dedicated delivery team will pick up your items from the vendors and bring them directly to your door during your selected time slot." %}</p>
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="flex-shrink-0 me-4">
+                    <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center fw-bold fs-4" style="width: 60px; height: 60px;">5</div>
+                </div>
+                <div>
+                    <h3 class="fw-bold">{% trans "Pay & Enjoy" %}</h3>
+                    <p class="text-muted">{% trans "Pay securely using Telebirr, CBE Birr, or Cash on Delivery. Receive your items, check the quality, and enjoy your purchase!" %}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="bg-light rounded-4 p-5">
+                <img src="https://images.pexels.com/photos/6169033/pexels-photo-6169033.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Delivery Step" class="img-fluid rounded-4 shadow">
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Info Sections -->
+    <div class="row g-4 pt-5 border-top">
+        <div class="col-md-4">
+            <h4 class="fw-bold mb-3"><i class="bi bi-wallet2 text-primary me-2"></i> {% trans "Payment Methods" %}</h4>
+            <ul class="list-unstyled text-muted">
+                <li><i class="bi bi-check2 text-success me-2"></i> Telebirr</li>
+                <li><i class="bi bi-check2 text-success me-2"></i> CBE Birr</li>
+                <li><i class="bi bi-check2 text-success me-2"></i> Cash on Delivery</li>
+                <li><i class="bi bi-check2 text-success me-2"></i> Bank Transfer (CBE, Awash, etc.)</li>
+            </ul>
+        </div>
+        <div class="col-md-4">
+            <h4 class="fw-bold mb-3"><i class="bi bi-arrow-left-right text-primary me-2"></i> {% trans "Return Policy" %}</h4>
+            <p class="text-muted">
+                {% trans "If a product is damaged or doesn't match the description, you can return it within 24 hours of delivery. Contact our support team immediately for assistance." %}
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h4 class="fw-bold mb-3"><i class="bi bi-shield-lock text-primary me-2"></i> {% trans "Privacy & Security" %}</h4>
+            <p class="text-muted">
+                {% trans "Your personal data and transaction history are protected using industry-standard encryption. We never share your phone number with third parties." %}
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
-from .models import Profile, Category, Vendor, Product, Order, OrderItem
+from .models import Profile, Category, Vendor, Product, Order, OrderItem, Article
 
 @admin.register(Category)
 class CategoryAdmin(TranslationAdmin):
@@ -29,5 +29,12 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ('id', 'full_name', 'total_price', 'status', 'payment_method', 'created_at')
     list_filter = ('status', 'payment_method', 'created_at')
     inlines = [OrderItemInline]
+
+@admin.register(Article)
+class ArticleAdmin(TranslationAdmin):
+    list_display = ('title', 'author', 'is_published', 'created_at')
+    list_filter = ('is_published', 'created_at', 'author')
+    search_fields = ('title', 'content')
+    prepopulated_fields = {'slug': ('title',)}
 
 admin.site.register(Profile)

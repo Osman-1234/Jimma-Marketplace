@@ -1,46 +1,105 @@
 {% extends "base.html" %}
 {% load i18n static %}
 
-{% block title %}{{ category.name }}{% endblock %}
+{% block title %}{{ category.name }} | Jimma Market{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-  <div class="mb-4">
-    <h1 class="fw-bold">{{ category.name }}</h1>
-    {% if category.description %}
-      <p class="lead text-muted">{{ category.description }}</p>
-    {% endif %}
-  </div>
+<section class="py-5 bg-light min-vh-100">
+  <div class="container">
+    <nav aria-label="breadcrumb" class="mb-4">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'index' %}" class="text-decoration-none">{% trans "Home" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'product_list' %}" class="text-decoration-none">{% trans "Shop" %}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ category.name }}</li>
+      </ol>
+    </nav>
 
-  <div class="row g-4">
-    {% for product in products %}
-    <div class="col-sm-6 col-md-4 col-lg-3">
-      <div class="card h-100 border-0 shadow-sm">
-        {% if product.image %}
-          <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
-        {% else %}
-          <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
-            <span class="text-white">{% trans "No Image" %}</span>
-          </div>
+    <div class="row align-items-end mb-5">
+      <div class="col-md-8">
+        <h1 class="fw-bold mb-2">{{ category.name }}</h1>
+        {% if category.description %}
+          <p class="lead text-secondary mb-2">{{ category.description }}</p>
         {% endif %}
-        <div class="card-body">
-          <h5 class="card-title h6 mb-2">
-            <a href="{% url 'product_detail' product.slug %}" class="text-decoration-none text-dark">
-              {{ product.name }}
-            </a>
-          </h5>
-          <p class="fw-bold text-primary mb-3">{{ product.price }} ETB</p>
-          <a href="{% url 'cart_add' product.id %}" class="btn btn-outline-primary btn-sm w-100">
-            {% trans "Add to Cart" %}
-          </a>
-        </div>
+        <div class="badge bg-primary rounded-pill px-3">{{ products.count }} {% trans "Products" %}</div>
+      </div>
+      <div class="col-md-4 mt-3 mt-md-0">
+        <form method="GET" class="d-flex align-items-center">
+            <div class="input-group">
+                <span class="input-group-text bg-white border-0 shadow-sm"><i class="bi bi-geo-alt text-primary"></i></span>
+                <select name="kebele" onchange="this.form.submit()" class="form-select border-0 shadow-sm">
+                    <option value="">{% trans "All Neighborhoods" %}</option>
+                    {% for kebele in kebeles %}
+                    <option value="{{ kebele }}" {% if current_kebele == kebele %}selected{% endif %}>{{ kebele }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
       </div>
     </div>
-    {% empty %}
-    <div class="col-12 text-center py-5">
-      <p class="text-muted">{% trans "No products available in this category yet." %}</p>
+
+    {% if current_kebele %}
+    <div class="alert alert-info border-0 shadow-sm rounded-4 d-flex justify-content-between align-items-center mb-4">
+        <span>
+            <i class="bi bi-info-circle-fill me-2"></i>
+            {% trans "Showing" %} <strong>{{ category.name }}</strong> {% trans "from vendors in" %} <strong>{{ current_kebele }}</strong>
+        </span>
+        <a href="?" class="btn btn-sm btn-outline-info rounded-pill">{% trans "Clear Filter" %}</a>
     </div>
-    {% endfor %}
+    {% endif %}
+
+    <div class="row g-4">
+      {% for product in products %}
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <div class="card h-100 border-0 shadow-sm position-relative hover-lift transition-hover">
+          {% if product.image %}
+            <img src="{{ product.image.url }}" class="card-img-top p-2 rounded-4" alt="{{ product.name }}" style="height: 200px; object-fit: cover;">
+          {% else %}
+            <div class="card-img-top bg-secondary-subtle d-flex align-items-center justify-content-center m-2 rounded-4" style="height: 200px;">
+              <i class="bi bi-image fs-1 text-secondary"></i>
+            </div>
+          {% endif %}
+          <div class="card-body pt-0">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+                {% if product.review_count > 0 %}
+                <div class="text-warning small">
+                    <i class="bi bi-star-fill"></i> {{ product.average_rating }}
+                </div>
+                {% else %}
+                <span class="small text-muted">{% trans "No reviews" %}</span>
+                {% endif %}
+                <small class="text-muted"><i class="bi bi-geo-alt me-1"></i>{{ product.vendor.kebele }}</small>
+            </div>
+            <h6 class="fw-bold mb-2">
+              <a href="{% url 'product_detail' product.slug %}" class="text-decoration-none text-dark">
+                {{ product.name }}
+              </a>
+            </h6>
+            <p class="text-secondary small mb-3 text-truncate">{{ product.description|striptags }}</p>
+            <div class="d-flex justify-content-between align-items-center mt-auto">
+              <span class="fw-bold text-primary">{{ product.price }} ETB</span>
+              <a href="{% url 'cart_add' product.id %}" class="btn btn-dark btn-sm rounded-pill px-3">
+                <i class="bi bi-plus-lg"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center py-5 bg-white rounded-5 shadow-sm">
+        <i class="bi bi-box-seam display-1 text-secondary opacity-50 mb-4"></i>
+        <h4 class="fw-bold">{% trans "No products found" %}</h4>
+        <p class="text-secondary">{% trans "Try adjusting your filters or check back later." %}</p>
+        <a href="?" class="btn btn-primary rounded-pill px-4 mt-3">{% trans "Show All Neighborhoods" %}</a>
+      </div>
+      {% endfor %}
+    </div>
   </div>
-</div>
+</section>
+
+<style>
+    .transition-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 1rem 3rem rgba(0,0,0,.1) !important;
+    }
+</style>
 {% endblock %}

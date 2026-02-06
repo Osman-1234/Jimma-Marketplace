@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="text-center mb-5">
+                <h1 class="fw-bold">{% trans "Track Your Order" %}</h1>
+                <p class="text-muted">{% trans "Enter your order details below to see the current status of your delivery in Jimma." %}</p>
+            </div>
+
+            <div class="card border-0 shadow-sm p-4 p-lg-5 rounded-4 mb-5">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label class="form-label fw-bold small">{% trans "Order ID" %}</label>
+                        <input type="text" name="order_id" class="form-control bg-light border-0 py-3" placeholder="e.g. 1045" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label fw-bold small">{% trans "Phone Number" %}</label>
+                        <input type="tel" name="phone" class="form-control bg-light border-0 py-3" placeholder="+251 ..." required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg w-100 py-3 fw-bold rounded-3">{% trans "Check Status" %}</button>
+                </form>
+            </div>
+
+            {% if order %}
+            <div class="card border-primary border-2 shadow-lg p-4 p-lg-5 rounded-4 animate__animated animate__fadeIn">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="fw-bold mb-0">{% trans "Order" %} #{{ order.id }}</h3>
+                    <span class="badge bg-primary fs-6 px-3">
+                        {% if order.status == 'pending' %}{% trans "Pending" %}
+                        {% elif order.status == 'processing' %}{% trans "Processing" %}
+                        {% elif order.status == 'shipped' %}{% trans "In Transit" %}
+                        {% elif order.status == 'delivered' %}{% trans "Delivered" %}
+                        {% else %}{{ order.status|capfirst }}{% endif %}
+                    </span>
+                </div>
+
+                <div class="timeline-status mb-5">
+                    <div class="d-flex justify-content-between position-relative">
+                        <div class="text-center" style="z-index: 1;">
+                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-2" style="width: 40px; height: 40px;">
+                                <i class="bi bi-receipt"></i>
+                            </div>
+                            <small class="fw-bold">{% trans "Placed" %}</small>
+                        </div>
+                        <div class="text-center" style="z-index: 1;">
+                            <div class="{% if order.status != 'pending' %}bg-primary{% else %}bg-secondary{% endif %} text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-2" style="width: 40px; height: 40px;">
+                                <i class="bi bi-box-seam"></i>
+                            </div>
+                            <small class="fw-bold">{% trans "Packaged" %}</small>
+                        </div>
+                        <div class="text-center" style="z-index: 1;">
+                            <div class="{% if order.status == 'shipped' or order.status == 'delivered' %}bg-primary{% else %}bg-secondary{% endif %} text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-2" style="width: 40px; height: 40px;">
+                                <i class="bi bi-truck"></i>
+                            </div>
+                            <small class="fw-bold">{% trans "In Transit" %}</small>
+                        </div>
+                        <div class="text-center" style="z-index: 1;">
+                            <div class="{% if order.status == 'delivered' %}bg-primary{% else %}bg-secondary{% endif %} text-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-2" style="width: 40px; height: 40px;">
+                                <i class="bi bi-house-check"></i>
+                            </div>
+                            <small class="fw-bold">{% trans "Delivered" %}</small>
+                        </div>
+                        <!-- Line -->
+                        <div class="position-absolute top-50 start-0 translate-middle-y w-100 bg-light" style="height: 2px; z-index: 0;"></div>
+                    </div>
+                </div>
+
+                <div class="bg-light p-4 rounded-3">
+                    <h6 class="fw-bold mb-3">{% trans "Delivery Details" %}</h6>
+                    <p class="mb-1 small"><strong>{% trans "Customer:" %}</strong> {{ order.full_name }}</p>
+                    <p class="mb-1 small"><strong>{% trans "Kebele:" %}</strong> {{ order.get_kebele_display }}</p>
+                    <p class="mb-1 small"><strong>{% trans "Address:" %}</strong> {{ order.address }}</p>
+                    <p class="mb-0 small"><strong>{% trans "Time Slot:" %}</strong> {{ order.get_delivery_time_slot_display }}</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+    .timeline-status {
+        padding: 0 10px;
+    }
+</style>
+{% endblock %}

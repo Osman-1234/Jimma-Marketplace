@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Market News & Blog - Jimma Market{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="py-5 bg-light border-bottom">
+    <div class="container py-4 text-center">
+        <h1 class="display-4 fw-bold">Market News & Blog</h1>
+        <p class="lead text-muted mb-0">Stay updated with the latest trends, vendor stories, and market updates in Jimma.</p>
+    </div>
+</section>
+
+<!-- Blog List Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-4">
+            {% for article in articles %}
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm transition-hover">
+                    {% if article.image %}
+                    <img src="{{ article.image.url }}" class="card-img-top" alt="{{ article.title }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="bg-secondary text-white d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="bi bi-journal-text display-4"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-2 text-muted small">
+                            <span><i class="bi bi-calendar3 me-1"></i> {{ article.created_at|date:"M d, Y" }}</span>
+                            <span class="mx-2">|</span>
+                            <span><i class="bi bi-person me-1"></i> {{ article.author.get_full_name|default:article.author.username }}</span>
+                        </div>
+                        <h5 class="card-title fw-bold">
+                            <a href="{% url 'article_detail' article.slug %}" class="text-dark text-decoration-none">
+                                {{ article.title }}
+                            </a>
+                        </h5>
+                        <p class="card-text text-muted">
+                            {{ article.content|striptags|truncatewords:20 }}
+                        </p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 pt-0 pb-4">
+                        <a href="{% url 'article_detail' article.slug %}" class="btn btn-outline-primary btn-sm rounded-pill">Read More</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <div class="mb-3">
+                    <i class="bi bi-journal-x display-1 text-muted"></i>
+                </div>
+                <h3>No articles found</h3>
+                <p class="text-muted">Check back later for new updates and stories from Jimma Market.</p>
+                <a href="{% url 'index' %}" class="btn btn-primary rounded-pill px-4">Return Home</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<style>
+    .transition-hover:hover {
+        transform: translateY(-5px);
+        transition: transform 0.3s ease-in-out;
+        box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1) !important;
+    }
+</style>
+{% endblock %}

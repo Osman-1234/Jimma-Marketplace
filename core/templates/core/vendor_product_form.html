@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }} - Jimma Market{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-body p-5">
+                    <nav aria-label="breadcrumb" class="mb-4">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'vendor_dashboard' %}" class="text-decoration-none">Dashboard</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+                        </ol>
+                    </nav>
+
+                    <h2 class="fw-bold mb-4 text-center">{{ title }}</h2>
+                    <p class="text-muted text-center mb-5">Provide accurate details for your product to attract more customers.</p>
+
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        <div class="row g-4">
+                            <!-- Product Name -->
+                            <div class="col-12">
+                                <label class="form-label fw-bold small text-uppercase">Product Name</label>
+                                {{ form.name }}
+                                {% if form.name.errors %}
+                                <div class="text-danger small mt-1">{{ form.name.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Category -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small text-uppercase">Category</label>
+                                {{ form.category }}
+                                {% if form.category.errors %}
+                                <div class="text-danger small mt-1">{{ form.category.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Price -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small text-uppercase">Price (ETB)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-end-0">ETB</span>
+                                    {{ form.price }}
+                                </div>
+                                {% if form.price.errors %}
+                                <div class="text-danger small mt-1">{{ form.price.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Stock -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small text-uppercase">Stock Quantity</label>
+                                {{ form.stock }}
+                                {% if form.stock.errors %}
+                                <div class="text-danger small mt-1">{{ form.stock.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Image -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold small text-uppercase">Product Image</label>
+                                {{ form.image }}
+                                {% if form.image.errors %}
+                                <div class="text-danger small mt-1">{{ form.image.errors }}</div>
+                                {% endif %}
+                                <div class="form-text small">Recommended size: 800x800px</div>
+                            </div>
+
+                            <!-- Description -->
+                            <div class="col-12">
+                                <label class="form-label fw-bold small text-uppercase">Description</label>
+                                {{ form.description }}
+                                {% if form.description.errors %}
+                                <div class="text-danger small mt-1">{{ form.description.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Availability -->
+                            <div class="col-12">
+                                <div class="form-check form-switch p-3 bg-light rounded-3 d-flex align-items-center">
+                                    <div class="flex-grow-1">
+                                        <label class="form-check-label fw-bold mb-0" for="{{ form.is_available.id_for_label }}">Available for Sale</label>
+                                        <div class="form-text small mt-0">Toggle off to temporarily hide this product from customers.</div>
+                                    </div>
+                                    <div class="ms-3">
+                                        {{ form.is_available }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Buttons -->
+                            <div class="col-12 mt-5">
+                                <div class="d-flex gap-3">
+                                    <button type="submit" class="btn btn-primary rounded-pill px-5 py-3 fw-bold flex-grow-1">
+                                        Save Product
+                                    </button>
+                                    <a href="{% url 'vendor_dashboard' %}" class="btn btn-light rounded-pill px-4 py-3 fw-bold">
+                                        Cancel
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-control, .form-select {
+        padding: 0.75rem 1rem;
+        border-radius: 10px;
+        border: 1px solid #dee2e6;
+    }
+    .form-control:focus, .form-select:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.1);
+    }
+    .input-group-text {
+        border-radius: 10px 0 0 10px;
+    }
+    .input-group .form-control {
+        border-radius: 0 10px 10px 0;
+    }
+</style>
+{% endblock %}

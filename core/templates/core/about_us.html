@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- Hero Section -->
+    <div class="row align-items-center mb-5">
+        <div class="col-md-6">
+            <h1 class="display-4 fw-bold mb-4">{% trans "Empowering Jimma's Local Commerce" %}</h1>
+            <p class="lead text-muted mb-4">
+                {% trans "Jimma Market is the city's premier digital marketplace, dedicated to connecting local businesses with their community through technology and seamless delivery." %}
+            </p>
+            <div class="d-flex gap-3">
+                <a href="{% url 'product_list' %}" class="btn btn-primary btn-lg px-4">{% trans "Shop Now" %}</a>
+                <a href="{% url 'contact_us' %}" class="btn btn-outline-secondary btn-lg px-4">{% trans "Contact Us" %}</a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="position-relative">
+                <div class="bg-primary rounded-pill position-absolute top-50 start-50 translate-middle w-75 h-75 opacity-10 blur-3xl"></div>
+                <img src="https://images.pexels.com/photos/1637108/pexels-photo-1637108.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Jimma Culture" class="img-fluid rounded-4 shadow-lg position-relative">
+            </div>
+        </div>
+    </div>
+
+    <!-- Story Section -->
+    <div class="row mb-5 py-5">
+        <div class="col-lg-8 mx-auto text-center">
+            <h2 class="fw-bold mb-4">{% trans "Our Story" %}</h2>
+            <p class="fs-5 text-secondary mb-0">
+                {% trans "Born in the heart of the world's coffee birthplace, Jimma Market started with a simple vision: to make everyday shopping effortless for every resident of Jimma. We believe that by digitizing local trade, we can support Jimma's economy while providing unmatched convenience to consumers." %}
+            </p>
+        </div>
+    </div>
+
+    <!-- Mission & Vision -->
+    <div class="row g-4 mb-5 pb-5">
+        <div class="col-md-6">
+            <div class="card border-0 bg-light h-100 p-4 p-lg-5">
+                <div class="mb-4">
+                    <span class="badge bg-primary-subtle text-primary p-2 px-3 rounded-pill">{% trans "Our Mission" %}</span>
+                </div>
+                <h3 class="fw-bold mb-3">{% trans "Connecting Jimma" %}</h3>
+                <p class="text-secondary mb-0">
+                    {% trans "To provide a reliable, fast, and user-friendly platform that bridges the gap between Jimma's diverse sellers and the digital consumer, ensuring quality products reach every Kebele within hours." %}
+                </p>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card border-0 bg-light h-100 p-4 p-lg-5">
+                <div class="mb-4">
+                    <span class="badge bg-success-subtle text-success p-2 px-3 rounded-pill">{% trans "Our Vision" %}</span>
+                </div>
+                <h3 class="fw-bold mb-3">{% trans "The Hub of Commerce" %}</h3>
+                <p class="text-secondary mb-0">
+                    {% trans "To become the leading e-commerce ecosystem in Jimma and the Oromia region, setting the standard for local delivery networks and digital marketplace trust." %}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Why Us Section -->
+    <div class="text-center mb-5">
+        <h2 class="fw-bold mb-5">{% trans "Why Shop With Us?" %}</h2>
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="p-4">
+                    <div class="h1 text-primary mb-3"><i class="bi bi-shop"></i></div>
+                    <h5 class="fw-bold">{% trans "Local Support" %}</h5>
+                    <p class="small text-muted">{% trans "Directly supporting businesses in Jimma city." %}</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-4">
+                    <div class="h1 text-primary mb-3"><i class="bi bi-truck"></i></div>
+                    <h5 class="fw-bold">{% trans "Fast Delivery" %}</h5>
+                    <p class="small text-muted">{% trans "Same-day delivery to all Jimma Kebeles." %}</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-4">
+                    <div class="h1 text-primary mb-3"><i class="bi bi-shield-check"></i></div>
+                    <h5 class="fw-bold">{% trans "Trusted Quality" %}</h5>
+                    <p class="small text-muted">{% trans "Verified sellers and quality-checked products." %}</p>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-4">
+                    <div class="h1 text-primary mb-3"><i class="bi bi-translate"></i></div>
+                    <h5 class="fw-bold">{% trans "Multi-Language" %}</h5>
+                    <p class="small text-muted">{% trans "Afaan Oromoo, Amharic, and English support." %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Section -->
+    <div class="bg-dark text-white rounded-4 p-5">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">{% trans "Meet Our Team" %}</h2>
+            <p class="text-white-50">{% trans "The people working behind the scenes to modernize Jimma's marketplace." %}</p>
+        </div>
+        
+        <div class="row g-4 justify-content-center">
+            <!-- Lead Developer -->
+            <div class="col-md-5">
+                <div class="card bg-white bg-opacity-10 border-0 h-100 p-4">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center text-white fw-bold shadow" style="width: 80px; height: 80px; font-size: 2rem;">
+                            B
+                        </div>
+                        <div class="ms-4">
+                            <h4 class="fw-bold mb-1">Bilal</h4>
+                            <span class="badge bg-primary text-uppercase">{% trans "Lead Developer" %}</span>
+                        </div>
+                    </div>
+                    <p class="text-white-50 mb-4">
+                        {% trans "Passionate about building scalable digital solutions that solve real-world problems for the Jimma community." %}
+                    </p>
+                    <div class="mt-auto">
+                        <div class="d-flex flex-wrap gap-3">
+                            <a href="mailto:bilalmaa614@gmail.com" class="btn btn-sm btn-outline-light rounded-pill">
+                                <i class="bi bi-envelope me-1"></i> Email
+                            </a>
+                            <a href="https://t.me/Bilnett" target="_blank" class="btn btn-sm btn-outline-light rounded-pill">
+                                <i class="bi bi-telegram me-1"></i> Telegram
+                            </a>
+                            <a href="https://github.com/Osman-1234" target="_blank" class="btn btn-sm btn-outline-light rounded-pill">
+                                <i class="bi bi-github me-1"></i> GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Teams -->
+            <div class="col-md-7">
+                <div class="row g-4">
+                    <div class="col-sm-6">
+                        <div class="bg-white bg-opacity-10 rounded-4 p-4 text-center h-100">
+                            <div class="h2 mb-3"><i class="bi bi-truck"></i></div>
+                            <h6 class="fw-bold mb-2">{% trans "Logistics & Ops" %}</h6>
+                            <p class="small text-white-50 mb-0">{% trans "Managing delivery zones and rider networks across all Kebeles." %}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="bg-white bg-opacity-10 rounded-4 p-4 text-center h-100">
+                            <div class="h2 mb-3"><i class="bi bi-headset"></i></div>
+                            <h6 class="fw-bold mb-2">{% trans "Customer Success" %}</h6>
+                            <p class="small text-white-50 mb-0">{% trans "Providing local support in Afaan Oromoo and Amharic." %}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="bg-white bg-opacity-10 rounded-4 p-4 text-center h-100">
+                            <div class="h2 mb-3"><i class="bi bi-people"></i></div>
+                            <h6 class="fw-bold mb-2">{% trans "Vendor Relations" %}</h6>
+                            <p class="small text-white-50 mb-0">{% trans "Onboarding and supporting Jimma's local businesses." %}</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="bg-white bg-opacity-10 rounded-4 p-4 text-center h-100 d-flex flex-column justify-content-center">
+                            <p class="small text-white-50 mb-3">{% trans "Interested in joining our mission?" %}</p>
+                            <a href="{% url 'contact_us' %}" class="btn btn-sm btn-primary">{% trans "Work with us" %}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

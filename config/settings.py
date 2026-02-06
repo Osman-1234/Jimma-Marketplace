@@ -176,3 +176,6 @@ if EMAIL_USE_SSL:
     EMAIL_USE_TLS = False
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = 'index'
