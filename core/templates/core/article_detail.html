@@ -12,7 +12,7 @@
                 <header class="mb-5 text-center">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb justify-content-center mb-4">
-                            <li class="breadcrumb-item"><a href="{% url 'index' %}" class="text-decoration-none">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-decoration-none">Home</a></li>
                             <li class="breadcrumb-item"><a href="{% url 'article_list' %}" class="text-decoration-none">Blog</a></li>
                             <li class="breadcrumb-item active" aria-current="page">{{ article.title|truncatechars:30 }}</li>
                         </ol>

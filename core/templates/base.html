@@ -81,7 +81,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center" href="{% url 'index' %}">
+            <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
                 <i class="bi bi-shop-window me-2 text-primary"></i>
                 Jimma Market
             </a>
@@ -188,7 +188,7 @@
                         <li class="mb-2"><a href="{% url 'about_us' %}" class="text-muted text-decoration-none">{% trans "About Us" %}</a></li>
                         <li class="mb-2"><a href="{% url 'contact_us' %}" class="text-muted text-decoration-none">{% trans "Contact Support" %}</a></li>
                         <li class="mb-2"><a href="{% url 'delivery_info' %}" class="text-muted text-decoration-none">{% trans "Delivery Info" %}</a></li>
-                        <li class="mb-2"><a href="{% url 'seller_info' %}" class="text-muted text-decoration-none">{% trans "Sell on Jimma" %}</a></li>
+                        <li class="mb-2"><a href="{% url 'project_log' %}" class="text-muted text-decoration-none">{% trans "Project Log" %}</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-4">
@@ -209,7 +209,7 @@
                     <p class="text-muted mb-0 small">&copy; 2026 Jimma Market. {% trans "All rights reserved." %}</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
-                    <p class="text-muted mb-0 small">{% trans "Built by" %} <a href="https://github.com/Osman-1234" target="_blank" class="text-primary text-decoration-none fw-bold">Bilal</a></p>
+                    <p class="text-muted mb-0 small">{% trans "Built by" %} <a href="https://github.com/Osman-1234" target="_blank" class="text-primary text-decoration-none fw-bold">Bilal</a> | <a href="{% url 'project_log' %}" class="text-muted text-decoration-none">v1.1.0</a></p>
                 </div>
             </div>
         </div>

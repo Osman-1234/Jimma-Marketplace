@@ -375,3 +375,35 @@ def article_list(request):
 def article_detail(request, slug):
     article = get_object_or_404(Article, slug=slug, is_published=True)
     return render(request, 'core/article_detail.html', {'article': article})
+
+def project_log(request):
+    """
+    View to display project version history and updates.
+    """
+    logs = [
+        {
+            "version": "1.1.0",
+            "date": "February 6, 2026",
+            "description": "Enhanced user experience and neighborhood filtering.",
+            "changes": [
+                "Implemented Neighborhood (Kebele) filtering for products and categories.",
+                "Added user registration (signup) functionality.",
+                "Enhanced hero search bar with product and Kebele search combined.",
+                "Updated site-wide contact information and social links.",
+                "Integrated internationalization (i18n) support for key pages.",
+            ]
+        },
+        {
+            "version": "1.0.0",
+            "date": "February 1, 2026",
+            "description": "Initial launch of Jimma Market platform.",
+            "changes": [
+                "Core marketplace functionality with multi-vendor support.",
+                "Product listing, detail views, and category organization.",
+                "Shopping cart and checkout system with order tracking.",
+                "Vendor dashboard for product and order management.",
+                "Basic news and blog section integration.",
+            ]
+        }
+    ]
+    return render(request, 'core/project_log.html', {'logs': logs, 'current_version': '1.1.0'})

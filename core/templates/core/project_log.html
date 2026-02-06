@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block title %}{% trans "Project Log & Version History" %} | Jimma Market{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="bg-primary text-white py-5 mb-5">
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold mb-3">{% trans "Project Log" %}</h1>
+        <p class="lead mb-0">{% trans "Tracking our progress and commitment to improving Jimma Market." %}</p>
+        <div class="mt-4">
+            <span class="badge bg-white text-primary px-3 py-2 fs-6 rounded-pill">
+                {% trans "Current Version" %}: v{{ current_version }}
+            </span>
+        </div>
+    </div>
+</section>
+
+<div class="container mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <!-- Timeline -->
+            <div class="timeline">
+                {% for log in logs %}
+                <div class="card border-0 shadow-sm mb-4">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3 class="h4 fw-bold mb-0 text-primary">v{{ log.version }}</h3>
+                            <span class="text-muted small"><i class="bi bi-calendar3 me-1"></i> {{ log.date }}</span>
+                        </div>
+                        <h5 class="fw-bold mb-3">{{ log.description }}</h5>
+                        <ul class="list-group list-group-flush bg-transparent">
+                            {% for change in log.changes %}
+                            <li class="list-group-item bg-transparent border-0 ps-0 d-flex">
+                                <i class="bi bi-check2-circle text-success me-3 mt-1"></i>
+                                <span>{{ change }}</span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Future Roadmap (Optional Placeholder) -->
+            <div class="mt-5 p-4 bg-light rounded-4 border">
+                <h4 class="fw-bold mb-3"><i class="bi bi-rocket-takeoff me-2 text-primary"></i>{% trans "Future Roadmap" %}</h4>
+                <p class="text-muted mb-0">
+                    {% trans "We're constantly working on new features including automated delivery dispatch, integrated payment gateways (Telebirr/CBE Birr), and a dedicated mobile app for vendors." %}
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .timeline .card {
+        position: relative;
+        transition: all 0.3s ease;
+    }
+    .timeline .card:hover {
+        transform: scale(1.01);
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.1) !important;
+    }
+    .timeline .card::before {
+        content: '';
+        position: absolute;
+        left: -1rem;
+        top: 2rem;
+        width: 0.5rem;
+        height: 0.5rem;
+        background-color: var(--bs-primary);
+        border-radius: 50%;
+        display: none;
+    }
+    @media (min-width: 992px) {
+        .timeline {
+            border-left: 2px solid #dee2e6;
+            padding-left: 2rem;
+            margin-left: 1rem;
+        }
+        .timeline .card::before {
+            display: block;
+            left: -2.3rem;
+        }
+    }
+</style>
+{% endblock %}

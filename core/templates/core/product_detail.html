@@ -8,7 +8,7 @@
   <div class="container">
     <nav aria-label="breadcrumb" class="mb-4">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="{% url 'index' %}" class="text-decoration-none">{% trans "Home" %}</a></li>
+        <li class="breadcrumb-item"><a href="{% url 'home' %}" class="text-decoration-none">{% trans "Home" %}</a></li>
         <li class="breadcrumb-item"><a href="{% url 'category_products' product.category.slug %}" class="text-decoration-none">{{ product.category.name }}</a></li>
         <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
       </ol>
